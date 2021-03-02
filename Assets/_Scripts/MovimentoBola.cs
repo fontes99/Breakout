@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using MilkShake;
 
 public class MovimentoBola : MonoBehaviour
 {
@@ -12,6 +13,8 @@ public class MovimentoBola : MonoBehaviour
 
     GameManager gm;
 
+    public Shaker shaker;
+    public ShakePreset preset;
 
     // ----
 
@@ -78,6 +81,7 @@ public class MovimentoBola : MonoBehaviour
         
         else {
             gm.vidas--;
+            shaker.Shake(preset);
             Reset();
             sound_behavior.PlaySound("dmg");
 
