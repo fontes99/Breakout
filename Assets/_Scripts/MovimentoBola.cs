@@ -18,9 +18,9 @@ public class MovimentoBola : MonoBehaviour
 
     // ----
 
-    void RandBallMovment(){
+    void BallMovment(float dx1, float dx2){
 
-        float dirX = Random.Range(-5.0f, 5.0f);
+        float dirX = Random.Range(dx1, dx2);
         float dirY = Random.Range(1.0f, 5.0f);
 
         direcao = new Vector3(dirX, dirY).normalized;
@@ -30,7 +30,7 @@ public class MovimentoBola : MonoBehaviour
     // Start is called before the first frame update
     void Start(){
 
-        RandBallMovment();
+        BallMovment(-5.0f, 5.0f);
         gm = GameManager.GetInstance();
 
     }
@@ -74,9 +74,13 @@ public class MovimentoBola : MonoBehaviour
         }
         
         else if (col.tag == "Player"){
-            
 
-            RandBallMovment();
+            Vector3 rel_position = transform.position - col.transform.position;
+
+            Debug.Log($"col: {col.transform.position} | pos: {transform.position} | rel: {rel_position} ");
+
+            BallMovment(rel_position.x*2, rel_position.x*2);
+        
         }
         
         else {
@@ -94,7 +98,7 @@ public class MovimentoBola : MonoBehaviour
        Vector3 playerPosition = GameObject.FindGameObjectWithTag("Player").transform.position;
        transform.position = playerPosition + new Vector3(0, 1.5f, 0);
 
-       RandBallMovment();
+       BallMovment(-5.0f, 5.0f);
 
        if (gm.vidas <= 0 && gm.gameState == GameManager.GameState.GAME){
            gm.ChangeState(GameManager.GameState.ENDGAME);
